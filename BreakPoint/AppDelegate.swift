@@ -18,6 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        // 檢查用戶是否是註銷 是的話就連接到登入畫面
+        if Auth.auth().currentUser == nil {
+            // 取得storyboard
+            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            // 取得有識別代碼的viewController
+            let authVC = storyboard.instantiateViewController(withIdentifier: "AuthVC")
+            window?.makeKeyAndVisible()
+            window?.rootViewController?.present(authVC, animated: true, completion: nil)
+        }
+        
         return true
     }
 

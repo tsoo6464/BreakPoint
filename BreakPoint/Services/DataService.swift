@@ -22,4 +22,14 @@ class DataService {
     func createDBUser(uid: String, userData: Dictionary<String, Any>) {
         REF_USERS.child(uid).updateChildValues(userData)
     }
+    
+    func uploadPost(withMessage message: String, forUID uid: String, withGroupKey groupKey: String?, sendCompletion: @escaping (_ success: Bool) -> ()) {
+        if groupKey != nil {
+            // send to groups ref
+        } else {
+            // 產生一組Id 然後記錄下發送訊息人ID和內容
+            REF_FEED.childByAutoId().updateChildValues(["content": message, "senderId": uid])
+            sendCompletion(true)
+        }
+    }
 }

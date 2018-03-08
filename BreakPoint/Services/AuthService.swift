@@ -35,4 +35,13 @@ class AuthService {
             loginComplete(true, nil)
         }
     }
+    
+    func signOutUser() {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("Cloud not signOut!")
+        }
+        
+    }
 }

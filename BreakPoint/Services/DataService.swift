@@ -32,4 +32,21 @@ class DataService {
             sendCompletion(true)
         }
     }
+    // 獲得所有的feedMessage
+    func getAllFeedMessage(completion: @escaping (_ message: [Message]) -> ()) {
+        var messageArray = [Message]()
+        // 獲得feed的databaseRef的，dataSnapshot在取得所有的訊息
+        REF_FEED.observeSingleEvent(of: .value) { (feedMessageSnapshot) in
+            guard let feedMsgSnapshot = feedMessageSnapshot.children.allObjects as? [DataSnapshot] else { return }
+            
+            for message in feedMsgSnapshot {
+                let content = message.childSnapshot(forPath: "content").value as! String
+                let senderId = message.childSnapshot(forPath: "senderId").value as! String
+                let feedMessage = Message(content: content, senderId: senderId)
+                messageArray.append(feedMessage)
+            }
+            
+            completion(messageArray)
+        }
+    }
 }

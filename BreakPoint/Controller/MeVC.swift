@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class MeVC: UIViewController {
 
@@ -21,9 +22,29 @@ class MeVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        emailLbl.text = Auth.auth().currentUser?.email
+    }
     // Action
     @IBAction func signOutBtnWasPressed(_ sender: Any) {
-        AuthService.instance.signOutUser()
+        // 用AlertViewController做登出確認
+        let logoutPopup = UIAlertController(title: "Logout?", message: "Are you sure you want to logout?", preferredStyle: .alert)
+        let logoutAction = UIAlertAction(title: "Yes", style: .destructive) { (buttonTapped) in
+            do {
+                try Auth.auth().signOut()
+                let authVC = self.storyboard?.instantiateViewController(withIdentifier: "AuthVC") as? AuthVC
+                self.present(authVC!, animated: true, completion: nil)
+            } catch {
+                debugPrint(error.localizedDescription as Any)
+            }
+        }
+        let action = UIAlertAction(title: "No", style: .cancel, handler: nil)
+        logoutPopup.addAction(action)
+        logoutPopup.addAction(logoutAction)
+        
+        present(logoutPopup, animated: true, completion: nil)
     }
     
 }

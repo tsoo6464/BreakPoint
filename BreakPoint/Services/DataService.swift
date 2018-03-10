@@ -23,6 +23,19 @@ class DataService {
         REF_USERS.child(uid).updateChildValues(userData)
     }
     
+    func getUsername(forUID uid: String, completion: @escaping (_ username: String) -> ()) {
+        REF_USERS.observeSingleEvent(of: .value) { (userInfoSnapshot) in
+            guard let users = userInfoSnapshot.children.allObjects as? [DataSnapshot] else { return }
+            for user in users {
+                if user.key == uid {
+                    let email = user.childSnapshot(forPath: "email").value as! String
+                    completion(email)
+                }
+            }
+        }
+    }
+    
+    //
     func uploadPost(withMessage message: String, forUID uid: String, withGroupKey groupKey: String?, sendCompletion: @escaping (_ success: Bool) -> ()) {
         if groupKey != nil {
             // send to groups ref

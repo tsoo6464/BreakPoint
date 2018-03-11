@@ -11,6 +11,8 @@
 		3939306920510F4B00AA0AA5 /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3939306820510F4B00AA0AA5 /* UIViewExt.swift */; };
 		3939306B2051196D00AA0AA5 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3939306A2051196D00AA0AA5 /* FeedCell.swift */; };
 		3939306D2052127A00AA0AA5 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3939306C2052127A00AA0AA5 /* Message.swift */; };
+		39771C11205516030080F859 /* CreateGroupsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39771C10205516030080F859 /* CreateGroupsVC.swift */; };
+		39771C132055418B0080F859 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39771C122055418B0080F859 /* UserCell.swift */; };
 		39B469CC20475C3A008965C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B469CB20475C3A008965C0 /* AppDelegate.swift */; };
 		39B469CE20475C3A008965C0 /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B469CD20475C3A008965C0 /* FeedVC.swift */; };
 		39B469D020475C3A008965C0 /* GroupsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B469CF20475C3A008965C0 /* GroupsVC.swift */; };
@@ -34,6 +36,8 @@
 		3939306820510F4B00AA0AA5 /* UIViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
 		3939306A2051196D00AA0AA5 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		3939306C2052127A00AA0AA5 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		39771C10205516030080F859 /* CreateGroupsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupsVC.swift; sourceTree = "<group>"; };
+		39771C122055418B0080F859 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		39B469C820475C3A008965C0 /* BreakPoint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BreakPoint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39B469CB20475C3A008965C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		39B469CD20475C3A008965C0 /* FeedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
@@ -114,6 +118,7 @@
 				39B469EA2048439F008965C0 /* LoginVC.swift */,
 				39B469F5205093C8008965C0 /* MeVC.swift */,
 				39B469F920510934008965C0 /* CreatePostVC.swift */,
+				39771C10205516030080F859 /* CreateGroupsVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -124,6 +129,7 @@
 				39B469EC204843F6008965C0 /* InsetTextField.swift */,
 				39B469EE20484A6D008965C0 /* ShadowView.swift */,
 				3939306A2051196D00AA0AA5 /* FeedCell.swift */,
+				39771C122055418B0080F859 /* UserCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -318,6 +324,7 @@
 				39B469E920484362008965C0 /* AuthVC.swift in Sources */,
 				39B469D020475C3A008965C0 /* GroupsVC.swift in Sources */,
 				39B469EB2048439F008965C0 /* LoginVC.swift in Sources */,
+				39771C132055418B0080F859 /* UserCell.swift in Sources */,
 				39B469F120490A38008965C0 /* AuthService.swift in Sources */,
 				39B469CC20475C3A008965C0 /* AppDelegate.swift in Sources */,
 				39B469F420490C3F008965C0 /* Constants.swift in Sources */,
@@ -326,6 +333,7 @@
 				39B469F6205093C8008965C0 /* MeVC.swift in Sources */,
 				39B469FA20510934008965C0 /* CreatePostVC.swift in Sources */,
 				39B469CE20475C3A008965C0 /* FeedVC.swift in Sources */,
+				39771C11205516030080F859 /* CreateGroupsVC.swift in Sources */,
 				3939306D2052127A00AA0AA5 /* Message.swift in Sources */,
 				39B469ED204843F6008965C0 /* InsetTextField.swift in Sources */,
 				39B469E72047643C008965C0 /* DataService.swift in Sources */,

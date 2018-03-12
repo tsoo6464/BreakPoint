@@ -17,17 +17,18 @@ class UserCell: UITableViewCell {
     func configureCell(image: UIImage, email: String, isSelected: Bool) {
         self.profileImage.image = image
         self.emailLbl.text = email
-        if isSelected {
-            self.checkImage.isHidden = false
-        } else {
-            self.checkImage.isHidden = true
-        }
+        self.checkImage.isHidden = isSelected
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        if selected {
+            if self.checkImage.isHidden {
+                self.checkImage.isHidden = false
+            } else {
+                self.checkImage.isHidden = true
+            }
+        }
     }
 
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class CreateGroupsVC: UIViewController {
     // Outlets
@@ -54,6 +55,23 @@ class CreateGroupsVC: UIViewController {
     }
     
     @IBAction func doneBtnWasPressed(_ sender: Any) {
+        guard let title = titleTxt.text, let description = descriptionTxt.text, let myUID = Auth.auth().currentUser?.uid else { return }
+        if title != "" && description != "" {
+            // 確認title和description 都有輸入後 先得到member的uid 在建立group
+            DataService.instance.getUID(forUsernames: chosenUserArray, completion: { (returnIds) in
+                var userIds = returnIds
+                // 加上自己的uid(自己也是成員之一)
+                userIds.append(myUID)
+                
+                DataService.instance.createGroup(withTitle: title, andDescription: description, forUserIds: userIds, completion: { (success) in
+                    if success {
+                        self.dismiss(animated: true, completion: nil)
+                    } else {
+                        print("Group could not be created. Please try again.")
+                    }
+                })
+            })
+        }
     }
     
 }
@@ -89,6 +107,7 @@ extension CreateGroupsVC: UITableViewDelegate, UITableViewDataSource {
             doneBtn.isHidden = false
         } else {
             // 如果選中的emailArray內已經存有這組email 代表要取消 所以過濾掉這組email
+            // filter 會回傳條件為true的結果
             chosenUserArray = chosenUserArray.filter({ $0 != email})
             if chosenUserArray.count > 0 {
                 groupMemberLbl.text = chosenUserArray.joined(separator: ", ")

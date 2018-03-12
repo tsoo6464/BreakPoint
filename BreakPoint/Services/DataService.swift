@@ -76,5 +76,24 @@ class DataService {
             completion(emailArray)
         }
     }
+    // 用email獲取uid(group使用)
+    func getUID(forUsernames username: [String], completion: @escaping (_ uidArray: [String]) -> ()) {
+        var idArray = [String]()
+        REF_USERS.observeSingleEvent(of: .value) { (userSnapshot) in
+            guard let userSnapshot = userSnapshot.children.allObjects as? [DataSnapshot] else { return }
+            for user in userSnapshot {
+                let email = user.childSnapshot(forPath: "email").value as! String
+                if username.contains(email) {
+                    idArray.append(user.key)
+                }
+            }
+            completion(idArray)
+        }
+    }
+    // 創建group
+    func createGroup(withTitle title: String, andDescription description: String, forUserIds ids: [String], completion: @escaping (_ createComplete: Bool) -> ()) {
+        REF_GROUPS.childByAutoId().updateChildValues(["title": title, "description": description, "members": ids])
+        completion(true)
+    }
     
 }

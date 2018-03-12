@@ -14,6 +14,7 @@
             <string>AvenirNext-Bold</string>
         </array>
         <array key="Menlo.ttc">
+            <string>Menlo-Bold</string>
             <string>Menlo-Regular</string>
         </array>
     </customFonts>
@@ -418,13 +419,53 @@
                                 <rect key="frame" x="0.0" y="70" width="375" height="548"/>
                                 <color key="backgroundColor" red="0.25490196079999999" green="0.27058823529999998" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="100" id="A8g-9M-rqs">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="groupCell" rowHeight="100" id="A8g-9M-rqs" customClass="GroupCell" customModule="BreakPoint" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="A8g-9M-rqs" id="2di-1f-Uoa">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zTd-pd-bVV">
+                                                    <rect key="frame" x="23" y="19" width="329" height="21"/>
+                                                    <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="18"/>
+                                                    <color key="textColor" red="0.015686274510000001" green="0.6705882353" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="xPY-dF-UIg">
+                                                    <rect key="frame" x="30" y="48" width="322" height="41"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JBd-Rx-8Z2">
+                                                            <rect key="frame" x="0.0" y="0.0" width="322" height="18"/>
+                                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="14"/>
+                                                            <color key="textColor" red="0.015686274510000001" green="0.6705882353" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_ members." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hgQ-jy-Op3">
+                                                            <rect key="frame" x="0.0" y="23" width="322" height="18"/>
+                                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="14"/>
+                                                            <color key="textColor" red="0.015686274510000001" green="0.6705882353" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="xPY-dF-UIg" firstAttribute="leading" secondItem="2di-1f-Uoa" secondAttribute="leadingMargin" constant="15" id="1Gu-vj-e6l"/>
+                                                <constraint firstItem="xPY-dF-UIg" firstAttribute="top" secondItem="zTd-pd-bVV" secondAttribute="bottom" constant="8" id="JXd-JX-GSE"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="zTd-pd-bVV" secondAttribute="trailing" constant="8" id="fUu-VN-SAu"/>
+                                                <constraint firstItem="xPY-dF-UIg" firstAttribute="bottom" secondItem="2di-1f-Uoa" secondAttribute="bottomMargin" id="m79-Zq-B6k"/>
+                                                <constraint firstItem="zTd-pd-bVV" firstAttribute="top" secondItem="2di-1f-Uoa" secondAttribute="topMargin" constant="8" id="oTW-R3-gnl"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="xPY-dF-UIg" secondAttribute="trailing" constant="8" id="pwf-db-M4X"/>
+                                                <constraint firstItem="zTd-pd-bVV" firstAttribute="leading" secondItem="2di-1f-Uoa" secondAttribute="leadingMargin" constant="8" id="rIN-9G-9aT"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.16078431369999999" green="0.16862745100000001" blue="0.20392156859999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <connections>
+                                            <outlet property="groupDescriptionLbl" destination="JBd-Rx-8Z2" id="TFP-Zh-3ri"/>
+                                            <outlet property="groupTitleLbl" destination="zTd-pd-bVV" id="uH6-f7-5Xj"/>
+                                            <outlet property="memberCountLbl" destination="hgQ-jy-Op3" id="g3y-Pw-NRF"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -441,6 +482,9 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Groups" image="groups-tabIcon" selectedImage="groups-tabIcon" id="cPa-gy-q4n"/>
+                    <connections>
+                        <outlet property="tableView" destination="OTa-sK-gcC" id="Sgx-Sh-lbX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>

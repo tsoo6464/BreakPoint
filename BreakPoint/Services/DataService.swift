@@ -95,5 +95,24 @@ class DataService {
         REF_GROUPS.childByAutoId().updateChildValues(["title": title, "description": description, "members": ids])
         completion(true)
     }
+    //
+    func getAllGroup(completion: @escaping (_ groupsArray: [Group]) -> ()) {
+        var groupsArray = [Group]()
+        REF_GROUPS.observeSingleEvent(of: .value) { (groupSnapshot) in
+            guard let groupSnapshot = groupSnapshot.children.allObjects as? [DataSnapshot], let myUID = Auth.auth().currentUser?.uid else { return }
+            for group in groupSnapshot {
+                // 取得這個group的members
+                let memberArray = group.childSnapshot(forPath: "members").value as! [String]
+                // members裡是否有自己 有的話就加入到group裡
+                if memberArray.contains(myUID) {
+                    let title = group.childSnapshot(forPath: "title").value as! String
+                    let description = group.childSnapshot(forPath: "description").value as! String
+                    let myGroup = Group(title: title, description: description, key: group.key, memberCount: memberArray.count, members: memberArray)
+                    groupsArray.append(myGroup)
+                }
+            }
+            completion(groupsArray)
+        }
+    }
     
 }

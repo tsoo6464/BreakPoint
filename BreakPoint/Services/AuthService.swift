@@ -8,7 +8,7 @@
 
 import Foundation
 import Firebase
-
+import RealmSwift
 
 class AuthService {
     static let instance = AuthService()
@@ -20,7 +20,7 @@ class AuthService {
                 return
             }
             
-            let userData = ["provider": user.providerID, "email": user.email]
+            let userData = ["provider": user.providerID, "email": user.email!, "profileImage": "defaultProfileImage"]
             DataService.instance.createDBUser(uid: user.uid, userData: userData)
             userCreationComplete(true, nil)
         }
@@ -34,5 +34,40 @@ class AuthService {
             }
             loginComplete(true, nil)
         }
+    }
+    
+    func loginUserForFB(withCredential credential: AuthCredential, loginComplete: @escaping CompletionHandler) {
+        Auth.auth().signIn(with: credential) { (User, Error) in
+            if Error != nil {
+                loginComplete(false, Error)
+                return
+            }
+            guard let user = User else { return }
+            let userData = ["provider": user.providerID, "email": user.email!, "profileImage": "defaultProfileImage"]
+            DataService.instance.createDBUser(uid: user.uid, userData: userData)
+            loginComplete(true, nil)
+        }
+    }
+    
+    func getMyUserInfo(completion: @escaping (_ userInfo: User) -> ()) {
+        let realm = try! Realm()
+        let myUserInfo = User()
+        
+        guard let currentUser = Auth.auth().currentUser else { return }
+        guard let email = currentUser.email else { return }
+        let uid = currentUser.uid
+        
+        let users: Results<User>? = realm.objects(User.self).filter("uid CONTAINS %@", uid)
+        
+        if (users?.isEmpty)! {
+            myUserInfo.profileImage = UIImage(named: "defaultProfileImage")?.pngData()
+        } else {
+            myUserInfo.profileImage = users?[0].profileImage
+        }
+        
+        myUserInfo.email = email
+        myUserInfo.uid = uid
+        
+        completion(myUserInfo)
     }
 }

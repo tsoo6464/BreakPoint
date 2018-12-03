@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import RealmSwift
 
 class CreatePostVC: UIViewController {
 
@@ -16,6 +17,9 @@ class CreatePostVC: UIViewController {
     @IBOutlet weak var emailLbl: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var sendBtn: UIButton!
+    // Variables
+    let realm = try! Realm()
+    var profileImageData = Data()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +30,15 @@ class CreatePostVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         emailLbl.text = Auth.auth().currentUser?.email
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let users = realm.objects(User.self).filter("uid CONTAINS %@", uid)
+        if !users.isEmpty {
+            let user = users[0]
+            profileImageData = user.profileImage!
+            profileImage.image = UIImage(data: profileImageData)!
+        } else {
+            profileImage.image = UIImage(named: "defaultProfileImage")
+        }
     }
     // Action
     @IBAction func sendBtnWasPressed(_ sender: Any) {

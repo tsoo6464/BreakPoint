@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FBSDKLoginKit
 
 class AuthVC: UIViewController {
     
@@ -32,8 +33,30 @@ class AuthVC: UIViewController {
     @IBAction func googleSignInBtnWasPressed(_ sender: Any) {
         
     }
-    
+    // Facebook登入
     @IBAction func facebookSignInBtnWasPressed(_ sender: Any) {
-        
+        let fbLoginManager = FBSDKLoginManager()
+        fbLoginManager.logIn(withReadPermissions: ["public_profile", "email"], from: self) { (result, error) in
+            if let error = error {
+                print("Failed to login: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let accessToken = FBSDKAccessToken.current() else {
+                print("Failed to get access token")
+                return
+            }
+            // 取得FB帳號token
+            let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.tokenString)
+            
+            AuthService.instance.loginUserForFB(withCredential: credential, loginComplete: { (success, error) in
+                if error != nil {
+                    debugPrint(error?.localizedDescription as Any)
+                } else {
+                    self.dismiss(animated: true, completion: nil)
+                    return
+                }
+            })
+        }
     }
 }

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0BFB014AFB6E0F0CB71593D6 /* Pods_BreakPoint.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A24B3957610D9AA6D6E0338 /* Pods_BreakPoint.framework */; };
+		39022D09217877B300C15420 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39022D08217877B300C15420 /* User.swift */; };
+		3903108E217D6BE40008AFF6 /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3903108D217D6BE30008AFF6 /* CircleImage.swift */; };
+		39031090217D7B9C0008AFF6 /* UIImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3903108F217D7B9C0008AFF6 /* UIImageExt.swift */; };
 		3939306920510F4B00AA0AA5 /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3939306820510F4B00AA0AA5 /* UIViewExt.swift */; };
 		3939306B2051196D00AA0AA5 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3939306A2051196D00AA0AA5 /* FeedCell.swift */; };
 		3939306D2052127A00AA0AA5 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3939306C2052127A00AA0AA5 /* Message.swift */; };
@@ -38,6 +41,9 @@
 
 /* Begin PBXFileReference section */
 		15AADB9182FB1824AA5681BC /* Pods-BreakPoint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BreakPoint.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BreakPoint/Pods-BreakPoint.debug.xcconfig"; sourceTree = "<group>"; };
+		39022D08217877B300C15420 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		3903108D217D6BE30008AFF6 /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
+		3903108F217D7B9C0008AFF6 /* UIImageExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExt.swift; sourceTree = "<group>"; };
 		3939306820510F4B00AA0AA5 /* UIViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
 		3939306A2051196D00AA0AA5 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		3939306C2052127A00AA0AA5 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -143,6 +149,7 @@
 				39771C122055418B0080F859 /* UserCell.swift */,
 				39771C1420565D820080F859 /* GroupCell.swift */,
 				39771C1820566EB60080F859 /* GroupFeedCell.swift */,
+				3903108D217D6BE30008AFF6 /* CircleImage.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -152,6 +159,7 @@
 			children = (
 				3939306C2052127A00AA0AA5 /* Message.swift */,
 				39771C162056614D0080F859 /* Group.swift */,
+				39022D08217877B300C15420 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -161,6 +169,7 @@
 			children = (
 				3939306820510F4B00AA0AA5 /* UIViewExt.swift */,
 				39771C1C20597A6A0080F859 /* UIViewControllerExt.swift */,
+				3903108F217D7B9C0008AFF6 /* UIImageExt.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -211,7 +220,6 @@
 				39B469C520475C3A008965C0 /* Frameworks */,
 				39B469C620475C3A008965C0 /* Resources */,
 				FCFCEEB9FBF3C4FE0FB68945 /* [CP] Embed Pods Frameworks */,
-				295DD2A414083164984101D5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -234,6 +242,7 @@
 				TargetAttributes = {
 					39B469C720475C3A008965C0 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -271,21 +280,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		295DD2A414083164984101D5 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BreakPoint/Pods-BreakPoint-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		D7EDF480CFDE69AFAB68312C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -311,15 +305,25 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-BreakPoint/Pods-BreakPoint-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -352,11 +356,14 @@
 				39B469F6205093C8008965C0 /* MeVC.swift in Sources */,
 				39B469FA20510934008965C0 /* CreatePostVC.swift in Sources */,
 				39B469CE20475C3A008965C0 /* FeedVC.swift in Sources */,
+				3903108E217D6BE40008AFF6 /* CircleImage.swift in Sources */,
 				39771C1920566EB60080F859 /* GroupFeedCell.swift in Sources */,
 				39771C11205516030080F859 /* CreateGroupsVC.swift in Sources */,
 				3939306D2052127A00AA0AA5 /* Message.swift in Sources */,
 				39B469ED204843F6008965C0 /* InsetTextField.swift in Sources */,
 				39B469E72047643C008965C0 /* DataService.swift in Sources */,
+				39022D09217877B300C15420 /* User.swift in Sources */,
+				39031090217D7B9C0008AFF6 /* UIImageExt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,7 +507,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tw.nan.www.BreakPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -516,7 +523,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tw.nan.www.BreakPoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

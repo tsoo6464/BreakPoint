@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import RealmSwift
 
 class GroupFeedVC: UIViewController {
     // Outlets
@@ -18,6 +19,7 @@ class GroupFeedVC: UIViewController {
     @IBOutlet weak var messageTxt: InsetTextField!
     @IBOutlet weak var sendBtn: UIButton!
     // Variables
+    let realm = try! Realm()
     var group: Group?
     var groupMessage = [Message]()
     
@@ -38,6 +40,11 @@ class GroupFeedVC: UIViewController {
         groupTitle.text = group.groupTitle
         DataService.instance.getGroupUsername(forGroup: group) { (returnEmailArray) in
             self.membersLbl.text = returnEmailArray.joined(separator: ", ")
+        }
+        // 更新用戶圖片
+        DataService.instance.REF_USERS.observe(.value) { (snapshot) in
+            DataService.instance.updateUserImage(completion: { (success) in
+            })
         }
     }
     
@@ -89,10 +96,18 @@ extension GroupFeedVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "groupFeedCell") as? GroupFeedCell else { return GroupFeedCell()}
+        
         let image = UIImage(named: "defaultProfileImage")
         let message = groupMessage[indexPath.row]
+        let userArray = realm.objects(User.self).filter("uid CONTAINS %@", message.senderId)
+        
         DataService.instance.getUsername(forUID: message.senderId) { (returnEmail) in
-            cell.configureCell(image: image!, email: returnEmail, content: message.content)
+            if !userArray.isEmpty {
+                let user = userArray[0]
+                cell.configureCell(image: UIImage(data: user.profileImage!)!, email: returnEmail, content: message.content)
+            } else {
+                cell.configureCell(image: image!, email: returnEmail, content: message.content)
+            }
         }
         return cell
     }

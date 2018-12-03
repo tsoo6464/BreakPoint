@@ -8,6 +8,8 @@
 
 import Foundation
 import Firebase
+import FirebaseStorage
+import RealmSwift
 // 取得database的根目錄 即database的URL根
 let DB_BASE = Database.database().reference()
 
@@ -18,6 +20,8 @@ class DataService {
     public private(set) var REF_USERS = DB_BASE.child("users")
     public private(set) var REF_GROUPS = DB_BASE.child("groups")
     public private(set) var REF_FEED = DB_BASE.child("feed")
+    
+    private let realm = try! Realm()
     // 建立以uid為唯一識別的UserDB
     func createDBUser(uid: String, userData: Dictionary<String, Any>) {
         REF_USERS.child(uid).updateChildValues(userData)
@@ -48,8 +52,7 @@ class DataService {
             completion(groupUsernameArray)
         }
     }
-    
-    //
+    //上傳訊息功能
     func uploadPost(withMessage message: String, forUID uid: String, withGroupKey groupKey: String?, sendCompletion: @escaping (_ success: Bool) -> ()) {
         guard let groupKey = groupKey else {
             // 產生一組Id 然後記錄下發送訊息人ID和內容
@@ -67,9 +70,9 @@ class DataService {
     func getAllFeedMessage(completion: @escaping (_ message: [Message]) -> ()) {
         var messageArray = [Message]()
         // 獲得feed的databaseRef的，dataSnapshot在取得所有的訊息
-        REF_FEED.observeSingleEvent(of: .value) { (feedMessageSnapshot) in
+        REF_FEED.observe(.value) { (feedMessageSnapshot) in
             guard let feedMsgSnapshot = feedMessageSnapshot.children.allObjects as? [DataSnapshot] else { return }
-            
+            //解開message
             for message in feedMsgSnapshot {
                 let content = message.childSnapshot(forPath: "content").value as! String
                 let senderId = message.childSnapshot(forPath: "senderId").value as! String
@@ -80,10 +83,10 @@ class DataService {
             completion(messageArray)
         }
     }
-    //
+    // 獲取群組message功能
     func getAllMessagesFor(desiredGroup: Group, completion: @escaping (_ messageArray: [Message]) -> ()) {
         var groupMessageArray = [Message]()
-        REF_GROUPS.child(desiredGroup.key).child("messages").observeSingleEvent(of: .value) { (groupMessageSnapshot) in
+        REF_GROUPS.child(desiredGroup.key).child("messages").observe(.value) { (groupMessageSnapshot) in
             guard let groupMessageSnapshot = groupMessageSnapshot.children.allObjects as? [DataSnapshot] else { return }
             for message in groupMessageSnapshot {
                 let content = message.childSnapshot(forPath: "content").value as! String
@@ -93,7 +96,6 @@ class DataService {
             }
             completion(groupMessageArray)
         }
-        
     }
     // 獲得與搜尋相關的email
     func getEmail(forSearchQuery query: String, completion: @escaping (_ emailArray: [String]) -> ()) {
@@ -147,5 +149,85 @@ class DataService {
             completion(groupsArray)
         }
     }
+    // 上傳用戶照片
+    func uploadUserImage(uid: String, image: UIImage, completion: @escaping (_ success: Bool) -> ()) {
+        let storageRef = Storage.storage().reference().child("UserProfileImage").child("\(uid).png")
+        let user = realm.objects(User.self).filter("uid CONTAINS %@", uid)
+        
+        if let uploadData = image.pngData() {
+            // 這行就是 FirebaseStorage 關鍵的存取方法。
+            storageRef.putData(uploadData, metadata: nil, completion: { (data, error) in
+                
+                if error != nil {
+                    print("Error: \(error!.localizedDescription)")
+                    completion(false)
+                }
+                
+                // 連結取得方式：data?.downloadURL()?.absoluteString。
+                if let uploadImageUrl = data?.downloadURL()?.absoluteString {
+                    do {
+                        try self.realm.write {
+                            user[0].imageURLString = uploadImageUrl
+                        }
+                        self.REF_USERS.child((Auth.auth().currentUser?.uid)!).updateChildValues(["profileImage": uploadImageUrl])
+                    } catch {
+                        print("Error updating userImageURLString, \(error)")
+                    }
+                }
+                completion(true)
+            })
+        }
+    }
     
+    func getFeedProfileImage(forUID uid: String, completion: @escaping (_ urlString: String) -> ()) {
+        REF_USERS.observeSingleEvent(of: .value) { (userDataSnapShot) in
+            guard let userDataSnapShot = userDataSnapShot.children.allObjects as? [DataSnapshot] else { return }
+            for user in userDataSnapShot {
+                if user.key == uid {
+                    let urlString = user.childSnapshot(forPath: "profileImage").value as! String
+                    completion(urlString)
+                }
+            }
+        }
+    }
+    // 更新用戶圖片
+    func updateUserImage(completion: @escaping (_ success: Bool) -> ()) {
+        REF_USERS.observeSingleEvent(of: .value) { (snapShot) in
+            guard let users = snapShot.children.allObjects as? [DataSnapshot] else {
+                completion(false)
+                return}
+            let userArray = self.realm.objects(User.self)
+            
+            for user in users {
+                let returnURLString = user.childSnapshot(forPath: "profileImage").value as! String
+                if returnURLString != "defaultProfileImage" {
+                    for realmUser in userArray {
+                        if realmUser.uid == user.key {
+                            if realmUser.imageURLString != returnURLString {
+                                let url = URL(string: returnURLString)!
+                                let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
+                                    if error == nil {
+                                        DispatchQueue.main.async(execute: {
+                                            do {
+                                                try self.realm.write {
+                                                    realmUser.profileImage = data
+                                                    realmUser.imageURLString = user.childSnapshot(forPath: "profileImage").value as! String
+                                                }
+                                                print("SUCCESS!!!!!")
+                                            } catch {
+                                                print("Error updating user, \(error)")
+                                            }
+                                        })
+                                    }
+                                })
+                                task.resume()
+                            }
+                        }
+                    }
+                }
+            }
+            completion(true)
+        }
+    }
 }
+

@@ -9,5 +9,12 @@ target 'BreakPoint' do
   pod 'Firebase/Core'
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
-
+  pod 'Firebase/Storage'
+  
+ # Pods for Facebook
+  pod 'Bolts'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
+  
+  pod 'RealmSwift'
 end

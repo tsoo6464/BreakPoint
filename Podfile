@@ -13,8 +13,8 @@ target 'BreakPoint' do
   
  # Pods for Facebook
   pod 'Bolts'
-  pod 'FBSDKCoreKit'
-  pod 'FBSDKLoginKit'
+  pod 'FacebookSDK'
+  pod 'FacebookSDK/LoginKit'
   
   pod 'RealmSwift'
 end

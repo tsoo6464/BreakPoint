@@ -98,68 +98,6 @@ extension FeedVC: UITableViewDelegate, UITableViewDataSource {
                 cell.configureCell(profileImage: UIImage(data: user.profileImage!)!, email: user.email, content: message.content)
             }
         }
-        
-//        DataService.instance.getFeedProfileImage(forUID: message.senderId) { (returnUrlString) in
-//            DataService.instance.getUsername(forUID: message.senderId, completion: { (returnUsername) in
-//                if returnUrlString != "defaultProfileImage" {
-//
-//                    let url = URL(string: returnUrlString)!
-//                    let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-//                        if error != nil {
-//                            print("Failed")
-//                        } else {
-//                            DispatchQueue.main.async(execute: {
-//                                self.load()
-//                                self.userArray = self.userArray?.filter("uid CONTAINS %@", message.senderId)
-//                                if (self.userArray?.isEmpty)! {
-//                                    // 本地端沒有資料 需要下載並儲存本地端
-//                                    guard let imageData = data else { return }
-//                                    if let image = UIImage(data: imageData) {
-//                                        cell.configureCell(profileImage: image, email: returnUsername, content: message.content)
-//                                        do {
-//                                            let newUser = User()
-//                                            newUser.email = returnUsername
-//                                            newUser.uid = message.senderId
-//                                            newUser.profileImage = imageData
-//                                            newUser.imageURLString = returnUrlString
-//                                            try self.realm.write {
-//                                                self.realm.add(newUser)
-//                                            }
-//                                        } catch {
-//                                            print("Error saving user, \(error)")
-//                                        }
-//                                    }
-//                                } else {
-//                                    // 本地端有資料 要比對和下載的資料有無不同
-//                                    // 不同就更新本地端 相同直接使用
-//                                    if let user = self.userArray?[0] {
-//                                        //相同
-//                                        if (user.profileImage?.elementsEqual(data!))! {
-//                                            cell.configureCell(profileImage: UIImage(data: data!)!, email: returnUsername, content: message.content)
-//                                        } else {
-//                                            // 不同需更新本地資料
-//                                            do {
-//                                                try self.realm.write {
-//                                                    user.profileImage = data!
-//                                                }
-//                                                cell.configureCell(profileImage: UIImage(data: data!)!, email: returnUsername, content: message.content)
-//                                            } catch {
-//                                                print("Error updating user, \(error)")
-//                                            }
-//                                        }
-//                                    }
-//
-//                                }
-//                            })
-//                        }
-//                    })
-//                    task.resume()
-//                } else {
-//                    // 如果載下來的URLString等於預設圖片
-//                    cell.configureCell(profileImage: UIImage(named: returnUrlString)!, email: returnUsername, content: message.content)
-//                }
-//            })
-//        }
         return cell
     }
 }

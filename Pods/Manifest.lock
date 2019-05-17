@@ -5,10 +5,18 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
-  - FBSDKCoreKit (4.25.0):
+  - FacebookSDK (4.37.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.25.0):
-    - FBSDKCoreKit
+    - FacebookSDK/CoreKit (= 4.37.0)
+    - FacebookSDK/MarketingKit (= 4.37.0)
+  - FacebookSDK/CoreKit (4.37.0):
+    - Bolts (~> 1.7)
+  - FacebookSDK/LoginKit (4.37.0):
+    - Bolts (~> 1.7)
+    - FacebookSDK/CoreKit
+  - FacebookSDK/MarketingKit (4.37.0):
+    - Bolts (~> 1.7)
+    - FacebookSDK/CoreKit
   - Firebase/Auth (4.1.0):
     - Firebase/Core
     - FirebaseAuth (= 4.1.0)
@@ -68,8 +76,8 @@ PODS:
 
 DEPENDENCIES:
   - Bolts
-  - FBSDKCoreKit
-  - FBSDKLoginKit
+  - FacebookSDK
+  - FacebookSDK/LoginKit
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -79,8 +87,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Bolts
-    - FBSDKCoreKit
-    - FBSDKLoginKit
+    - FacebookSDK
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -97,8 +104,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  FBSDKCoreKit: 53e3f4bfb64e80c5f229dd30ae33ff57fbbbd2d1
-  FBSDKLoginKit: f628c09684dae9c17f071cf90b014e886f5093ea
+  FacebookSDK: aac401153feabdedd7dfeb46acaccad7ac53fb69
   Firebase: ebebf41db7f10e0c7668b6eaaa857fbe599aa478
   FirebaseAnalytics: 76f754d37ca5b04f36856729b6af3ca0152d1069
   FirebaseAuth: 8d1d2389cf82f891048d6d50d27d044f55ae09a6
@@ -113,6 +119,6 @@ SPEC CHECKSUMS:
   Realm: 92f09a102692b96a9a10e9617f214f15c5ab85fc
   RealmSwift: 5f0481cd658bb751c509314b964a35eaa264d2cf
 
-PODFILE CHECKSUM: dd7f2aab125b836493bd61c25c46af9439657757
+PODFILE CHECKSUM: 1f6a01b10b1f89c480853dfda41242ee5fed4454
 
 COCOAPODS: 1.5.3

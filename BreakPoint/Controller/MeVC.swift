@@ -44,6 +44,8 @@ class MeVC: UIViewController {
     
     // Action
     @IBAction func signOutBtnWasPressed(_ sender: Any) {
+        
+        
         // 用AlertViewController做登出確認
         let logoutPopup = UIAlertController(title: "Logout?", message: "Are you sure you want to logout?", preferredStyle: .alert)
         let logoutAction = UIAlertAction(title: "Yes", style: .destructive) { (buttonTapped) in
